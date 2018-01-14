@@ -6,10 +6,9 @@
 
 <h2>Restaurants</h2>
 
-<ul>
-  <% restaurants.forEach((restaurant) => { %>
-    <li><%= restaurant.name %></li>
-  <% }) %>
-</ul>
+<% restaurants.forEach((restaurant) => { %>
+    <h4><%= restaurant.name %></h4>
+    <img src="<%= restaurant.image %>">
+<% }) %>
 
 <p><a href="/">Back</a></p>
