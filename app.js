@@ -13,7 +13,7 @@ app.get('/restaurants', (req, res) => {
     {name: "Port of Call", image: "https://www.redbeansandlife.com/wp-content/uploads/2014/06/Port-of-Call-New-Orleans.jpg"}
   ]
 
-  res.render("restaurants");
+  res.render("restaurants", {restaurants:restaurants});
 });
 
 app.listen(3000, process.env.IP, () => {

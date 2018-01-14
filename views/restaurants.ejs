@@ -5,3 +5,11 @@
 </style>
 
 <h2>Restaurants</h2>
+
+<ul>
+  <% restaurants.forEach((restaurant) => { %>
+    <li><%= restaurant.name %></li>
+  <% }) %>
+</ul>
+
+<p><a href="/">Back</a></p>
