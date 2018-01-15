@@ -20,9 +20,10 @@ app.get('/restaurants', (req, res) => {
   res.render("restaurants", {restaurants:restaurants});
 });
 
-app.post('/new_restaurant', (req,res) => {
-  let newRestaurant = req.body.newrestaurant;
-  restaurants.push(newRestaurant);
+app.post('/restaurants', (req,res) => {
+  // res.render("new_restaurant");
+  // let newRestaurant = req.body.newrestaurant;
+  // restaurants.push(newRestaurant);
   res.send("SUCCESS!!!");
 });
 
