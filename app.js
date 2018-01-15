@@ -46,7 +46,7 @@ app.post('/bars', (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let newBar = {name: name, image: image};
-  restaurants.push(newBar);
+  bars.push(newBar);
   res.redirect("/bars");
 });
 
