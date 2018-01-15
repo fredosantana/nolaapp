@@ -6,10 +6,16 @@
     <p><a class="btn btn-primary btn-large" href="/restaurant/new">Add a restaurant</a></p>
   </div>
 </header>
-<% restaurants.forEach((restaurant) => { %>
-    <h4><%= restaurant.name %></h4>
-    <img src="<%= restaurant.image %>">
-<% }) %>
-
-<p><a href="/">Back</a></p>
+<div class="row text-center">
+  <% restaurants.forEach((restaurant) => { %>
+    <div class="col-md-3 col-sm-6">
+      <a href="#">
+        <img src="<%= restaurant.image %>" class="img-thumbnail">
+      </a>
+      <div class="caption">
+        <h4><%= restaurant.name %></h4>
+      </div>
+    </div>
+  <% }) %>
+</div>
 <%- include('partials/footer') %>

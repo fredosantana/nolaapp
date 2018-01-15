@@ -3,6 +3,11 @@ body {
   color: white;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .jumbotron {
   background-color: purple;
 }

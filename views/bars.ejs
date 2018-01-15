@@ -6,8 +6,17 @@
     <p><a class="btn btn-primary btn-large" href="/bar/new">Add a bar</a></p>
   </div>
 </header>
-<% bars.forEach((bar) => { %>
-    <h4><%= bar.name %></h4>
-    <img src="<%= bar.image %>">
-<% }) %>
+<div class="row text-center">
+  <% bars.forEach((bar) => { %>
+    <div class="col-md-3 col-sm-6">
+      <a href="#">
+        <img src="<%= bar.image %>" class="img-thumbnail">
+      </a>
+      <div class="caption">
+        <h4><%= bar.name %></h4>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
 <%- include('partials/footer') %>
