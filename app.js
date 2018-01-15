@@ -54,6 +54,6 @@ app.get('/bar/new', (req, res) => {
   res.render("new_bar");
 });
 
-app.listen(3000, process.env.IP, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
 });
