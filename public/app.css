@@ -12,3 +12,29 @@ body {
   background-color: purple;
   border-radius: 0;
 }
+
+.landing-display {
+  font-family: 'Poiret One', cursive;
+  font-size: 4em;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: 'Poiret One', cursive;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+footer, h4, .navbar, .btn, .form-control {
+  font-family: 'Kavivanar', cursive;
+}
+
+.btn-primary {
+  background-color: #FFD700;
+  border-color: #FFD700;
+}
+
+.btn-primary:hover {
+  background-color: #007F00;
+  border-color: #007F00;
+}
