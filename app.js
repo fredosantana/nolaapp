@@ -1,21 +1,29 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+
+let restaurants = [
+  {name: "Oceana", image: "https://i.ytimg.com/vi/40SO2PVVdhE/hqdefault.jpg"},
+  {name: "Red Fish Grill", image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg"},
+  {name: "Port of Call", image: "https://www.redbeansandlife.com/wp-content/uploads/2014/06/Port-of-Call-New-Orleans.jpg"}
+]
 
 app.get('/', (req, res) => {
   res.render("landing");
 });
 
 app.get('/restaurants', (req, res) => {
-  let restaurants = [
-    {name: "Oceana", image: "https://i.ytimg.com/vi/40SO2PVVdhE/hqdefault.jpg"},
-    {name: "Red Fish Grill", image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg"},
-    {name: "Port of Call", image: "https://www.redbeansandlife.com/wp-content/uploads/2014/06/Port-of-Call-New-Orleans.jpg"}
-  ]
-
   res.render("restaurants", {restaurants:restaurants});
+});
+
+app.post('/new_restaurant', (req,res) => {
+  let newRestaurant = req.body.newrestaurant;
+  restaurants.push(newRestaurant);
+  res.send("SUCCESS!!!");
 });
 
 app.get('/bars', (req, res) => {
