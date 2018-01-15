@@ -21,7 +21,6 @@ app.get('/restaurants', (req, res) => {
 });
 
 app.post('/restaurants', (req, res) => {
-  // res.render("new_restaurant");
   // let newRestaurant = req.body.newrestaurant;
   // restaurants.push(newRestaurant);
   res.send("SUCCESS!!!");
