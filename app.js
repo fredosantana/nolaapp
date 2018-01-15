@@ -16,6 +16,17 @@ app.get('/restaurants', (req, res) => {
   res.render("restaurants", {restaurants:restaurants});
 });
 
+app.get('/bars', (req, res) => {
+  let bars = [
+    {name: "Oz", image: "http://www.neworleansonline.com/images/slideshows/listings/1152/04.jpg"},
+    {name: "Laffite's Blacksmith Bar", image: "https://www.theclio.com/web/ul/30495.70302.jpg"},
+    {name: "Bourbon Pub & Parade", image: "http://www.neworleansonline.com/images/slideshows/listings/1106/04.jpg"}
+  ]
+
+  res.render("bars", {bars:bars});
+});
+
+
 app.listen(3000, process.env.IP, () => {
   console.log("NolaApp Launched");
 });
