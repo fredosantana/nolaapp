@@ -1,9 +1,4 @@
-<style>
-  body {
-    font-family: sans-serif;
-  }
-</style>
-
+<%- include('partials/header') %>
 <p><a href="/">Home</a> | <a href="/restaurants">Restaurants</a> | Bars</p>
 
 <h2>Bars</h2>
@@ -12,3 +7,4 @@
     <h4><%= bar.name %></h4>
     <img src="<%= bar.image %>">
 <% }) %>
+<%- include('partials/footer') %>
