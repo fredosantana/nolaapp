@@ -1,0 +1,14 @@
+<style>
+  body {
+    font-family: sans-serif;
+  }
+</style>
+
+<p><a href="/">Home</a> | <a href="/restaurants">Restaurants</a> | Bars</p>
+
+<h2>Bars</h2>
+
+<% bars.forEach((bar) => { %>
+    <h4><%= bar.name %></h4>
+    <img src="<%= bar.image %>">
+<% }) %>
