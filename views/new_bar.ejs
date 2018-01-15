@@ -1,9 +1,13 @@
 <%- include('partials/header') %>
-<p><a href="/">Home</a> | <a href="/restaurants">Restaurants</a> | <a href="/bars">Bars</a></p>
-<h2>Add a Bar</h2>
-<form action="/bars" method="POST">
-  <input type="text" name="name" placeholder="Bar name">
-  <input type="text" name="image" placeholder="Image URL">
-  <button>Add a bar</button>
-</form>
+<div class="jumbotron">
+  <h2>Add a bar</h2>
+  <form action="/bars" method="POST">
+    <div class="form-group">
+      <input type="text" class="form-control" name="name" placeholder="Bar name">
+      <br>
+      <input type="text" class="form-control" name="image" placeholder="Image URL">
+    </div>
+    <button type="submit" class="btn btn-primary">Add a bar</button>
+  </form>
+</div>
 <%- include('partials/footer') %>

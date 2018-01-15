@@ -10,4 +10,5 @@ body {
 
 .jumbotron {
   background-color: purple;
+  border-radius: 0;
 }
