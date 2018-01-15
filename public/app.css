@@ -2,3 +2,7 @@ body {
   background-color: pink;
   color: white;
 }
+
+.jumbotron {
+  background-color: purple;
+}

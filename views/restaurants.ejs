@@ -1,8 +1,11 @@
 <%- include('partials/header') %>
-<p><a href="/">Home</a> | Restaurants | <a href="/bars">Bars</a></p>
-
-<h2>Restaurants</h2>
-<p><a href="/restaurant/new">Add a restaurant</a></p>
+<header class="jumbotron">
+  <div class="container">
+    <h2>Restaurants</h2>
+    <p><a href="/">Home</a> | Restaurants | <a href="/bars">Bars</a></p>
+    <p><a class="btn btn-primary btn-large" href="/restaurant/new">Add a restaurant</a></p>
+  </div>
+</header>
 <% restaurants.forEach((restaurant) => { %>
     <h4><%= restaurant.name %></h4>
     <img src="<%= restaurant.image %>">
