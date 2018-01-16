@@ -1,7 +1,11 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+const express    = require('express'),
+      app        = express(),
+      bodyParser = require('body-parser'),
+      mongoose   = require('mongoose');
 
+mongoose.connect('mongodb://localhost/nola', {
+  useMongoClient: true
+});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
