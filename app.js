@@ -10,9 +10,28 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+let restaurantSchema = new mongoose.Schema({
+  name: String,
+  image: String
+});
+
+let Restaurant = mongoose.model("Restaurant", restaurantSchema);
+
+Restaurant.create({
+   name: "Red Fish Grill",
+   image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg"},
+   (err, restaurant) => {
+     if(err) {
+       console.log(err);
+     } else {
+       console.log("New restaurant");
+       console.log(restaurant);
+     }
+});
+
+
 let restaurants = [
-  {name: "Oceana", image: "https://i.ytimg.com/vi/40SO2PVVdhE/hqdefault.jpg"},
-  {name: "Red Fish Grill", image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg"},
+  { image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg"},
   {name: "Port of Call", image: "https://www.redbeansandlife.com/wp-content/uploads/2014/06/Port-of-Call-New-Orleans.jpg"}
 ]
 
