@@ -13,16 +13,18 @@ body {
   border-radius: 0;
 }
 
-.landing-display {
+.header-display {
   font-family: 'Poiret One', cursive;
   font-size: 4em;
   font-weight: bold;
+  text-align: center;
 }
 
-h2 {
+.form-display {
   font-family: 'Poiret One', cursive;
   font-size: 3em;
   font-weight: bold;
+  text-align: center;
 }
 
 footer, h4, .navbar, .btn, .form-control {
