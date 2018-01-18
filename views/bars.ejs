@@ -7,15 +7,12 @@
 <div class="row text-center">
   <% bars.forEach((bar) => { %>
     <div class="col-md-3 col-sm-6">
-      <a href="#">
+      <a href="/bars/<%= bar._id %>">
         <img src="<%= bar.image %>" class="img-thumbnail">
       </a>
       <div class="caption">
         <h4><%= bar.name %></h4>
       </div>
-      <p>
-        <a href="/bars/<%= bar._id %>" class="btn btn-primary">More Info</a>
-      </p>
     </div>
   <% }) %>
 </div>
