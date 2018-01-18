@@ -54,6 +54,10 @@ app.get('/restaurant/new', (req, res) => {
   res.render("new_restaurant");
 });
 
+app.get('/restaurants/:id', (req, res) => {
+  res.send("Restaurant page coming soon!");
+});
+
 app.get('/bars', (req, res) => {
   Bar.find({}, (err, bars) => {
     if(err) {
