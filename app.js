@@ -23,24 +23,7 @@ let barSchema = new mongoose.Schema({
 });
 
 let Restaurant = mongoose.model("Restaurant", restaurantSchema);
-
 let Bar = mongoose.model("Bar", barSchema);
-
-Restaurant.create(
-  {
-    name: "Red Fish Grill",
-    image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg",
-    description: "Fine NOLA dining in a casual setting. Right in the heart of the French Quarter."
-  },
-  (err, restaurant) => {
-    if(err) {
-      console.log(err);
-    } else {
-      console.log("New restaurant created");
-      console.log(restaurant);
-    }
-  }
-);
 
 app.get('/', (req, res) => {
   res.render("index");
@@ -59,7 +42,8 @@ app.get('/restaurants', (req, res) => {
 app.post('/restaurants', (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
-  let newRestaurant = {name: name, image: image};
+  let description = req.body.description;
+  let newRestaurant = {name: name, image: image, description: description};
   Restaurant.create(newRestaurant, (err, newlyCreated) => {
     if(err) {
       console.log(err);
