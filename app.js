@@ -12,7 +12,8 @@ app.set('view engine', 'ejs');
 
 let restaurantSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 let barSchema = new mongoose.Schema({
@@ -21,7 +22,25 @@ let barSchema = new mongoose.Schema({
 });
 
 let Restaurant = mongoose.model("Restaurant", restaurantSchema);
+
 let Bar = mongoose.model("Bar", barSchema);
+
+// Bar.create(
+//   {
+//     name: "Bourbon Pub and Parade",
+//     image: "http://www.neworleansonline.com/images/slideshows/listings/1106/04.jpg",
+//     description: "The $5 happy hour on Sundays from 6:00PM to 8:00PM is a fabulous way to start your night!!"
+//   },
+//   (err, bar) => {
+//     if(err) {
+//       console.log(err);
+//     } else {
+//       console.log("New bar added");
+//       console.log(bar);
+//     }
+//   }
+// );
+
 
 app.get('/', (req, res) => {
   res.render("landing");
@@ -50,12 +69,12 @@ app.post('/restaurants', (req, res) => {
   });
 });
 
-app.get('/restaurant/new', (req, res) => {
+app.get('/restaurants/new', (req, res) => {
   res.render("new_restaurant");
 });
 
 app.get('/restaurants/:id', (req, res) => {
-  res.send("Restaurant page coming soon!");
+  res.render("show");
 });
 
 app.get('/bars', (req, res) => {
@@ -81,7 +100,7 @@ app.post('/bars', (req, res) => {
   });
 });
 
-app.get('/bar/new', (req, res) => {
+app.get('/bars/new', (req, res) => {
   res.render("new_bar");
 });
 
