@@ -43,7 +43,7 @@ let Bar = mongoose.model("Bar", barSchema);
 
 
 app.get('/', (req, res) => {
-  res.render("landing");
+  res.render("index");
 });
 
 app.get('/restaurants', (req, res) => {
