@@ -26,22 +26,21 @@ let Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
 let Bar = mongoose.model("Bar", barSchema);
 
-Bar.create(
+Restaurant.create(
   {
-    name: "Bourbon Pub and Parade",
-    image: "http://www.neworleansonline.com/images/slideshows/listings/1106/04.jpg",
-    description: "The $5 happy hour on Sundays from 6:00PM to 8:00PM is a fabulous way to start your night!!"
+    name: "Red Fish Grill",
+    image: "http://www.bunkycooks.com/wp-content/uploads/2011/03/Red-Fish-Grill-sign.jpg",
+    description: "Fine NOLA dining in a casual setting. Right in the heart of the French Quarter."
   },
-  (err, bar) => {
+  (err, restaurant) => {
     if(err) {
       console.log(err);
     } else {
-      console.log("New bar added");
-      console.log(bar);
+      console.log("New restaurant created");
+      console.log(restaurant);
     }
   }
 );
-
 
 app.get('/', (req, res) => {
   res.render("index");
@@ -75,7 +74,13 @@ app.get('/restaurants/new', (req, res) => {
 });
 
 app.get('/restaurants/:id', (req, res) => {
-  res.render("show");
+  Restaurant.findById(req.params.id, (err, foundRestaurant) => {
+    if(err){
+      console.log(err);
+    } else {
+      res.render("show", {bar: foundRestaurant});
+    }
+  });
 });
 
 app.get('/bars', (req, res) => {

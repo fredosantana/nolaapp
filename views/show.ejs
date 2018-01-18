@@ -1,5 +1,11 @@
 <%- include('partials/header') %>
-<h1 class="form-display"><%= bar.name %></h1>
-<img src="<%= bar.image %>">
-<p><%= bar.description %></p>
+<% if(bar) { %>
+  <h2 class="header-display"><%= bar.name %></h2>
+  <img src="<%= bar.image %>">
+  <p><%= bar.description %></p>
+<% } else if(restaurant) { %>
+  <h2 class="header-display"><%= restaurant.name %></h2>
+  <img src="<%= restaurant.image %>">
+  <p><%= restaurant.description %></p>
+<% } %>
 <%- include('partials/footer') %>
