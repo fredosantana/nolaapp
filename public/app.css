@@ -1,5 +1,5 @@
 body {
-  background-color: pink;
+  background-image: url('https://image.shutterstock.com/z/stock-photo-a-background-of-colorful-mardi-gras-beads-including-gold-blue-green-pink-and-purple-42394666.jpg');
   color: white;
 }
 
@@ -9,8 +9,9 @@ body {
 }
 
 .jumbotron {
-  background-color: purple;
+  background-image: url("https://previews.123rf.com/images/bettystrange/bettystrange1702/bettystrange170200072/72851570-mardi-gras-seamless-pattern-with-carnival-mask-masquerade-background-texture-paper-vector-illustrati-Stock-Illustration.jpg");
   border-radius: 0;
+  text-shadow: 2px 2px 8px #006600;
 }
 
 .header-display {
@@ -29,6 +30,10 @@ body {
 
 footer, h4, .navbar, .btn, .form-control {
   font-family: 'Kavivanar', cursive;
+}
+
+footer {
+  text-align: center;
 }
 
 .btn-primary {
