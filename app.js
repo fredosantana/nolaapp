@@ -18,28 +18,29 @@ let restaurantSchema = new mongoose.Schema({
 
 let barSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 let Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
 let Bar = mongoose.model("Bar", barSchema);
 
-// Bar.create(
-//   {
-//     name: "Bourbon Pub and Parade",
-//     image: "http://www.neworleansonline.com/images/slideshows/listings/1106/04.jpg",
-//     description: "The $5 happy hour on Sundays from 6:00PM to 8:00PM is a fabulous way to start your night!!"
-//   },
-//   (err, bar) => {
-//     if(err) {
-//       console.log(err);
-//     } else {
-//       console.log("New bar added");
-//       console.log(bar);
-//     }
-//   }
-// );
+Bar.create(
+  {
+    name: "Bourbon Pub and Parade",
+    image: "http://www.neworleansonline.com/images/slideshows/listings/1106/04.jpg",
+    description: "The $5 happy hour on Sundays from 6:00PM to 8:00PM is a fabulous way to start your night!!"
+  },
+  (err, bar) => {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log("New bar added");
+      console.log(bar);
+    }
+  }
+);
 
 
 app.get('/', (req, res) => {
@@ -90,7 +91,8 @@ app.get('/bars', (req, res) => {
 app.post('/bars', (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
-  let newBar = {name: name, image: image};
+  let description = req.body.description;
+  let newBar = {name: name, image: image, description: description};
   Bar.create(newBar, (err, newlyCreated) => {
     if(err) {
       console.log(err);
@@ -105,7 +107,13 @@ app.get('/bars/new', (req, res) => {
 });
 
 app.get('/bars/:id', (req, res) => {
-  res.render("show");
+  Bar.findById(req.params.id, (err, foundBar) => {
+    if(err){
+      console.log(err);
+    } else {
+      res.render("show", {bar: foundBar});
+    }
+  });
 });
 
 
