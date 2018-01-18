@@ -104,6 +104,11 @@ app.get('/bars/new', (req, res) => {
   res.render("new_bar");
 });
 
+app.get('/bars/:id', (req, res) => {
+  res.render("show");
+});
+
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
 });
