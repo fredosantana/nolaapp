@@ -1,6 +1,10 @@
 <%- include('partials/header') %>
 <% if(bar) { %>
-  <h2 class="header-display"><%= bar.name %></h2>
+  <header class="jumbotron">
+    <div class="container">
+      <h2 class="header-display"><%= bar.name %></h2>
+    </div>
+  </header>
   <img src="<%= bar.image %>">
   <p><%= bar.description %></p>
 <% } else if(restaurant) { %>
