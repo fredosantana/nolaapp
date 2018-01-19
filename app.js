@@ -34,7 +34,7 @@ app.post('/restaurants', (req, res) => {
   res.redirect("/restaurants");
 });
 
-app.get('/restaurant/new', (req, res) => {
+app.get('/restaurants/new', (req, res) => {
   res.render("new_restaurant");
 });
 
@@ -50,7 +50,7 @@ app.post('/bars', (req, res) => {
   res.redirect("/bars");
 });
 
-app.get('/bar/new', (req, res) => {
+app.get('/bars/new', (req, res) => {
   res.render("new_bar");
 });
 
