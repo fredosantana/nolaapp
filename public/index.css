@@ -1,0 +1,29 @@
+* {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  color: gold;
+  background-color: purple;
+}
+
+img {
+  height: 15em;
+  width: 15em;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 1px;
+}
+
+.option {
+  margin: 5em;
+  text-align: center;
+}
