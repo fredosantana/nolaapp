@@ -3,15 +3,15 @@ body {
   color: white;
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
+#header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-column-gap: 1px;
 }
 
-.jumbotron {
-  background-color: purple;
-  border-radius: 0;
-  text-shadow: 2px 2px 8px #006600;
+#home_nav {
+  color: white;
+  background-color: green;
 }
 
 .header-display {
@@ -28,7 +28,7 @@ body {
   text-align: center;
 }
 
-footer, h4, .navbar, .btn, .form-control {
+footer, h4, .btn, .form-control {
   font-family: 'Kavivanar', cursive;
 }
 
