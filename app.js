@@ -1,7 +1,8 @@
 const express    = require('express'),
       app        = express(),
       bodyParser = require('body-parser'),
-      mongoose   = require('mongoose');
+      mongoose   = require('mongoose'),
+      Bars        = require('./models/bars');
 
 mongoose.connect('mongodb://localhost/nola', {
   useMongoClient: true
@@ -16,14 +17,7 @@ let restaurantSchema = new mongoose.Schema({
   description: String
 });
 
-let barSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
 let Restaurant = mongoose.model("Restaurant", restaurantSchema);
-let Bar = mongoose.model("Bar", barSchema);
 
 app.get('/', (req, res) => {
   res.render("index");
