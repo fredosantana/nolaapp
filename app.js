@@ -1,23 +1,18 @@
-const express    = require('express'),
-      app        = express(),
-      bodyParser = require('body-parser'),
-      mongoose   = require('mongoose'),
-      Bars        = require('./models/bars');
+const express     = require('express'),
+      app         = express(),
+      bodyParser  = require('body-parser'),
+      mongoose    = require('mongoose'),
+      Bar         = require('./models/bars'),
+      Restaurant  = require('./models/restaurants'),
+      seedDB      = require('./seeds');
 
+seedDB();
 mongoose.connect('mongodb://localhost/nola', {
   useMongoClient: true
 });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-
-let restaurantSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-let Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
 app.get('/', (req, res) => {
   res.render("index");
