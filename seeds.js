@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
       Bar      = require('./models/bars'),
       Restaurant = require('./models/restaurants');
-      // Comment  = require('./models/comment');
+      Comment  = require('./models/comments');
 
 var bars = [
   {
@@ -55,19 +55,19 @@ function seedDB() {
       } else {
         console.log("Added a bar");
         // Create a comment
-        // Comment.create(
-        //   {
-        //     text: "Oh the fun we've had here",
-        //     author: "Wil Santana"
-        //   }, (err, comment) => {
-        //     if (err) {
-        //       console.log(err);
-        //     } else {
-        //       bar.comments.push(comment);
-        //       bar.save();
-        //       console.log("Created new comment");
-        //     }
-        //   });
+        Comment.create(
+          {
+            text: "Oh the fun we've had here",
+            author: "Wayne Allison"
+          }, (err, comment) => {
+            if (err) {
+              console.log(err);
+            } else {
+              bars.comments.push(comment);
+              bars.save();
+              console.log("Created new comment");
+            }
+          });
       }
     });
   });
@@ -88,19 +88,19 @@ function seedDB() {
       } else {
         console.log("Added a restaurant");
         // Create a comment
-        // Comment.create(
-        //   {
-        //     text: "Oh the fun we've had here",
-        //     author: "Wil Santana"
-        //   }, (err, comment) => {
-        //     if (err) {
-        //       console.log(err);
-        //     } else {
-        //       bar.comments.push(comment);
-        //       bar.save();
-        //       console.log("Created new comment");
-        //     }
-        //   });
+        Comment.create(
+          {
+            text: "The food's delicious!",
+            author: "Wil Santana"
+          }, (err, comment) => {
+            if (err) {
+              console.log(err);
+            } else {
+              restaurants.comments.push(comment);
+              restaurants.save();
+              console.log("Created new comment");
+            }
+          });
       }
     });
   });
