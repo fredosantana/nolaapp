@@ -27,7 +27,7 @@ app.get('/bars', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render("bars", {bars:bars});
+      res.render("bars/bars", {bars:bars});
     }
   });
 });
@@ -47,7 +47,7 @@ app.post('/bars', (req, res) => {
 });
 
 app.get('/bars/new', (req, res) => {
-  res.render("new_bar");
+  res.render("bars/new_bar");
 });
 
 app.get('/bars/:id', (req, res) => {
@@ -64,7 +64,7 @@ app.get('/bars/:id', (req, res) => {
 // Bar Comments Routes
 
 app.get('/bars/:id/comments/new', (req, res) =>{
-  res.send("Create Comment Form - Bars");
+  res.render("bars/comments/new");
 });
 
 // =======================
@@ -77,7 +77,7 @@ app.get('/restaurants', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render("restaurants", {restaurants:restaurants});
+      res.render("restaurants/restaurants", {restaurants:restaurants});
     }
   });
 });
@@ -97,7 +97,7 @@ app.post('/restaurants', (req, res) => {
 });
 
 app.get('/restaurants/new', (req, res) => {
-  res.render("new_restaurant");
+  res.render("restaurants/new_restaurant");
 });
 
 app.get('/restaurants/:id', (req, res) => {
@@ -114,7 +114,7 @@ app.get('/restaurants/:id', (req, res) => {
 // Restaurant Comments Routes
 
 app.get('/restaurants/:id/comments/new', (req, res) =>{
-  res.send("Create Comment Form - Restaurants");
+  res.render("restaurants/comments/new");
 });
 
 
