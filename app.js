@@ -4,15 +4,16 @@ const express     = require('express'),
       mongoose    = require('mongoose'),
       Bar         = require('./models/bars'),
       Restaurant  = require('./models/restaurants'),
+      Comment     = require('./models/comments'),
       seedDB      = require('./seeds');
 
-seedDB();
 mongoose.connect('mongodb://localhost/nola', {
   useMongoClient: true
 });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+seedDB();
 
 app.get('/', (req, res) => {
   res.render("index");
@@ -56,7 +57,7 @@ app.get('/bars/:id', (req, res) => {
       console.log(err);
     } else {
       console.log(foundBar);
-      res.render("show", {bar: foundBar});
+      res.render("bars/show", {bar: foundBar});
     }
   });
 });
@@ -69,6 +70,25 @@ app.get('/bars/:id/comments/new', (req, res) => {
       console.log(err);
     } else {
       res.render("bars/comments/new", {bar: bar});
+    }
+  });
+});
+
+app.post('/bars/:id/comments', (req, res) => {
+  Bar.findById(req.params.id, (err, bar) => {
+    if(err) {
+      console.log(err);
+      redirect("/bars");
+    } else {
+      Comment.create(req.body.comment, (err, comment) => {
+        if(err) {
+          console.log(err);
+        } else {
+          bar.comments.push(comment._id);
+          bar.save();
+          res.redirect('/bars/' + bar._id);
+        }
+      });
     }
   });
 });
@@ -112,7 +132,7 @@ app.get('/restaurants/:id', (req, res) => {
       console.log(err);
     } else {
       console.log(foundRestaurant);
-      res.render("show", {bar: foundRestaurant});
+      res.render("restaurants/show", {restaurant: foundRestaurant});
     }
   });
 });
@@ -125,6 +145,25 @@ app.get('/restaurants/:id/comments/new', (req, res) =>{
       console.log(err);
     } else {
       res.render("restaurants/comments/new", {restaurant: restaurant});
+    }
+  });
+});
+
+app.post('/restaurants/:id/comments', (req, res) => {
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if(err) {
+      console.log(err);
+      redirect("/restaurants");
+    } else {
+      Comment.create(req.body.comment, (err, comment) => {
+        if(err) {
+          console.log(err);
+        } else {
+          restaurant.comments.push(comment._id);
+          restaurant.save();
+          res.redirect('/restaurants/' + restaurant._id);
+        }
+      });
     }
   });
 });

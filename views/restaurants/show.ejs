@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+  <header class="jumbotron">
+    <div class="container">
+      <h2 class="header-display"><%= restaurant.name %></h2>
+    </div>
+  </header>
+  <img src="<%= restaurant.image %>">
+  <p><%= restaurant.description %></p>
+    <p><a class="btn btn-success" href="/restaurants/<%= restaurant.id %>/comments/new">Add a Comment</a></p>
+  <% restaurant.comments.forEach((comment) => { %>
+    <p>
+      <%= comment.author %> - <%= comment.text %>
+    </p>
+  <% }) %>
+<%- include('../partials/footer') %>

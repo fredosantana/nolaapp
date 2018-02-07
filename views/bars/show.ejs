@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+  <header class="jumbotron">
+    <div class="container">
+      <h2 class="header-display"><%= bar.name %></h2>
+    </div>
+  </header>
+  <img src="<%= bar.image %>">
+  <p><%= bar.description %></p>
+    <p><a class="btn btn-success" href="/bars/<%= bar.id %>/comments/new">Add a Comment</a></p>
+  <% bar.comments.forEach((comment) => { %>
+    <p>
+      <%= comment.author %> - <%= comment.text %>
+    </p>
+  <% }) %>
+<%- include('../partials/footer') %>
