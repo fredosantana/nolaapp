@@ -18,7 +18,9 @@ app.get('/', (req, res) => {
   res.render("index");
 });
 
+// =======================
 // Bars
+// =======================
 
 app.get('/bars', (req, res) => {
   Bar.find({}, (err, bars) => {
@@ -59,7 +61,16 @@ app.get('/bars/:id', (req, res) => {
   });
 });
 
+// Bar Comments Routes
+
+app.get('/bars/:id/comments/new', (req, res) =>{
+  res.send("Create Comment Form - Bars");
+});
+
+// =======================
 // Restaurants
+// =======================
+
 
 app.get('/restaurants', (req, res) => {
   Restaurant.find({}, (err, restaurants) => {
@@ -99,6 +110,13 @@ app.get('/restaurants/:id', (req, res) => {
     }
   });
 });
+
+// Restaurant Comments Routes
+
+app.get('/restaurants/:id/comments/new', (req, res) =>{
+  res.send("Create Comment Form - Restaurants");
+});
+
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
