@@ -63,8 +63,14 @@ app.get('/bars/:id', (req, res) => {
 
 // Bar Comments Routes
 
-app.get('/bars/:id/comments/new', (req, res) =>{
-  res.render("bars/comments/new");
+app.get('/bars/:id/comments/new', (req, res) => {
+  Bar.findById(req.params.id, (err, bar) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.render("bars/comments/new", {bar: bar});
+    }
+  });
 });
 
 // =======================
@@ -114,7 +120,13 @@ app.get('/restaurants/:id', (req, res) => {
 // Restaurant Comments Routes
 
 app.get('/restaurants/:id/comments/new', (req, res) =>{
-  res.render("restaurants/comments/new");
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.render("restaurants/comments/new", {restaurant: restaurant});
+    }
+  });
 });
 
 

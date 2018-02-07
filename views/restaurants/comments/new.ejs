@@ -1,3 +1,14 @@
 <%- include('../../partials/header') %>
-<h1>Restaurant Comment Form</h1>
+<div class="jumbotron">
+  <h2 class="form-display">How do you feel about <%= restaurant.name %>?</h2>
+  <form action="/restaurants/<%= restaurant._id %>/comments" method="POST">
+    <div class="form-group">
+      <input type="text" class="form-control" name="comment[text]" placeholder="Comment">
+      <br>
+      <input type="text" class="form-control" name="comment[author]" placeholder="Author">
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit your Comment</button>
+  </form>
+</div>
 <%- include('../../partials/footer') %>
