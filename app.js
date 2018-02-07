@@ -18,43 +18,7 @@ app.get('/', (req, res) => {
   res.render("index");
 });
 
-app.get('/restaurants', (req, res) => {
-  Restaurant.find({}, (err, restaurants) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("restaurants", {restaurants:restaurants});
-    }
-  });
-});
-
-app.post('/restaurants', (req, res) => {
-  let name = req.body.name;
-  let image = req.body.image;
-  let description = req.body.description;
-  let newRestaurant = {name: name, image: image, description: description};
-  Restaurant.create(newRestaurant, (err, newlyCreated) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.redirect("/restaurants");
-    }
-  });
-});
-
-app.get('/restaurants/new', (req, res) => {
-  res.render("new_restaurant");
-});
-
-app.get('/restaurants/:id', (req, res) => {
-  Restaurant.findById(req.params.id, (err, foundRestaurant) => {
-    if(err){
-      console.log(err);
-    } else {
-      res.render("show", {bar: foundRestaurant});
-    }
-  });
-});
+// Bars
 
 app.get('/bars', (req, res) => {
   Bar.find({}, (err, bars) => {
@@ -85,15 +49,56 @@ app.get('/bars/new', (req, res) => {
 });
 
 app.get('/bars/:id', (req, res) => {
-  Bar.findById(req.params.id, (err, foundBar) => {
+  Bar.findById(req.params.id).populate("comments").exec((err, foundBar) => {
     if(err){
       console.log(err);
     } else {
+      console.log(foundBar);
       res.render("show", {bar: foundBar});
     }
   });
 });
 
+// Restaurants
+
+app.get('/restaurants', (req, res) => {
+  Restaurant.find({}, (err, restaurants) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.render("restaurants", {restaurants:restaurants});
+    }
+  });
+});
+
+app.post('/restaurants', (req, res) => {
+  let name = req.body.name;
+  let image = req.body.image;
+  let description = req.body.description;
+  let newRestaurant = {name: name, image: image, description: description};
+  Restaurant.create(newRestaurant, (err, newlyCreated) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect("/restaurants");
+    }
+  });
+});
+
+app.get('/restaurants/new', (req, res) => {
+  res.render("new_restaurant");
+});
+
+app.get('/restaurants/:id', (req, res) => {
+  Restaurant.findById(req.params.id).populate("comments").exec((err, foundRestaurant) => {
+    if(err){
+      console.log(err);
+    } else {
+      console.log(foundRestaurant);
+      res.render("show", {bar: foundRestaurant});
+    }
+  });
+});
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");

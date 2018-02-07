@@ -1,9 +1,9 @@
 const mongoose = require('mongoose'),
       Bar      = require('./models/bars'),
-      Restaurant = require('./models/restaurants');
+      Restaurant = require('./models/restaurants'),
       Comment  = require('./models/comments');
 
-var bars = [
+let bars = [
   {
     name: "Bourbon Pub and Parade",
     image: "http://www.neworleansonline.com/images/slideshows/listings/1106/04.jpg",
@@ -20,7 +20,7 @@ var bars = [
     description: "Another one I go to when I'm in NOLA"
   }
 ];
-var restaurants = [
+let restaurants = [
   {
     name: "Oceana",
     image: "https://1.bp.blogspot.com/-F9vegPn55og/TsktWL0_WLI/AAAAAAAAArY/6n3Q9zbAjaQ/w1200-h630-p-k-no-nu/oceana.jpg",
@@ -32,7 +32,7 @@ var restaurants = [
     description: "Fine NOLA dining in a casual setting"
   },
   {
-    name: "Oz",
+    name: "Port of Call",
     image: "https://media-cdn.tripadvisor.com/media/photo-s/0f/18/7b/62/port-of-call.jpg",
     description: "Excellent burger joint in the heart of the Treme neighborhood"
   }
@@ -63,7 +63,7 @@ function seedDB() {
             if (err) {
               console.log(err);
             } else {
-              bars.comments.push(comment);
+              bars.comments.push(comment._id);
               bars.save();
               console.log("Created new comment");
             }
@@ -71,8 +71,7 @@ function seedDB() {
       }
     });
   });
-  // Add a few comments
-  // Remove all bars
+
   Restaurant.remove({}, (err) => {
     if (err) {
       console.log(err);
@@ -80,6 +79,8 @@ function seedDB() {
       console.log("Removed Restaurant!");
     }
   });
+
+  // Add a few comments
   // Add a new restaurant
   restaurants.forEach((seed) => {
     Restaurant.create(seed, (err, restaurants) => {
@@ -96,7 +97,7 @@ function seedDB() {
             if (err) {
               console.log(err);
             } else {
-              restaurants.comments.push(comment);
+              restaurants.comments.push(comment._id);
               restaurants.save();
               console.log("Created new comment");
             }
