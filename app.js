@@ -16,6 +16,19 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 seedDB();
 
+// PASSPORT CONFIGURATION
+
+app.use(require('express-session')({
+  secret: "Gizmo is annoying but so damn cute!",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.get('/', (req, res) => {
   res.render("index");
 });
