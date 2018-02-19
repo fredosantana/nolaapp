@@ -153,7 +153,7 @@ app.get('/restaurants/:id', (req, res) => {
 
 // Restaurant Comments Routes
 
-app.get('/restaurants/:id/comments/new', (req, res) =>{
+app.get('/restaurants/:id/comments/new', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if(err) {
       console.log(err);
@@ -182,6 +182,15 @@ app.post('/restaurants/:id/comments', (req, res) => {
   });
 });
 
+// ========================
+// AUTH Routes
+// ========================
+
+// Register form
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
