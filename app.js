@@ -2,14 +2,14 @@ const express     = require('express'),
       app         = express(),
       bodyParser  = require('body-parser'),
       mongoose    = require('mongoose'),
+      passport    = require('passport'),
+      LocalStrategy = require('passport-local'),
       Bar         = require('./models/bars'),
       Restaurant  = require('./models/restaurants'),
       Comment     = require('./models/comments'),
       seedDB      = require('./seeds');
 
-mongoose.connect('mongodb://localhost/nola', {
-  useMongoClient: true
-});
+mongoose.connect('mongodb://localhost/nola', {});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
