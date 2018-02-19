@@ -187,9 +187,22 @@ app.post('/restaurants/:id/comments', (req, res) => {
 // ========================
 
 // Register form
-
 app.get('/register', (req, res) => {
   res.render('register');
+});
+
+// Sign Up Logic
+app.post('/register', (req, res) => {
+  var newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, (err, user) => {
+    if(err){
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/bars');
+    });
+  });
 });
 
 app.listen(process.env.PORT || 5000, () => {
