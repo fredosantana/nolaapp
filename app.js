@@ -29,6 +29,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) =>{
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.get('/', (req, res) => {
   res.render("index");
 });
@@ -42,12 +47,12 @@ app.get('/bars', isLoggedIn, (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render("bars/bars", {bars:bars});
+      res.render("bars/bars", {bars:bars, currentUser: req.user});
     }
   });
 });
 
-app.post('/bars', (req, res) => {
+app.post('/bars', isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description = req.body.description;
@@ -117,12 +122,12 @@ app.get('/restaurants', isLoggedIn, (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      res.render("restaurants/restaurants", {restaurants:restaurants});
+      res.render("restaurants/restaurants", {restaurants:restaurants, currentUser: req.user});
     }
   });
 });
 
-app.post('/restaurants', (req, res) => {
+app.post('/restaurants', isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description = req.body.description;
@@ -136,7 +141,7 @@ app.post('/restaurants', (req, res) => {
   });
 });
 
-app.get('/restaurants/new', (req, res) => {
+app.get('/restaurants/new', isLoggedIn, (req, res) => {
   res.render("restaurants/new_restaurant");
 });
 
