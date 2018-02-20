@@ -220,6 +220,13 @@ app.post('/login', passport.authenticate("local",
   }), (req, res) => {
 });
 
+// Log Out Route
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
 });
