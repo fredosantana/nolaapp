@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 // Bars
 // =======================
 
-app.get('/bars', (req, res) => {
+app.get('/bars', isLoggedIn, (req, res) => {
   Bar.find({}, (err, bars) => {
     if(err) {
       console.log(err);
@@ -112,7 +112,7 @@ app.post('/bars/:id/comments', (req, res) => {
 // =======================
 
 
-app.get('/restaurants', (req, res) => {
+app.get('/restaurants', isLoggedIn, (req, res) => {
   Restaurant.find({}, (err, restaurants) => {
     if(err) {
       console.log(err);
@@ -226,6 +226,15 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+// Authentication Middleware
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+};
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
