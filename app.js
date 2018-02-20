@@ -205,6 +205,12 @@ app.post('/register', (req, res) => {
   });
 });
 
+// Log In form
+
+app.get('/login', (req, res) => {
+  res.render('login')
+});
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
 });
