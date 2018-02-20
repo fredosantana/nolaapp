@@ -34,6 +34,10 @@ app.use((req, res, next) =>{
   next();
 });
 
+// =======================
+// Home Route
+// =======================
+
 app.get('/', (req, res) => {
   res.render("index");
 });
@@ -66,11 +70,11 @@ app.post('/bars', isLoggedIn, (req, res) => {
   });
 });
 
-app.get('/bars/new', (req, res) => {
+app.get('/bars/new', isLoggedIn, (req, res) => {
   res.render("bars/new_bar");
 });
 
-app.get('/bars/:id', (req, res) => {
+app.get('/bars/:id', isLoggedIn, (req, res) => {
   Bar.findById(req.params.id).populate("comments").exec((err, foundBar) => {
     if(err){
       console.log(err);
@@ -83,7 +87,7 @@ app.get('/bars/:id', (req, res) => {
 
 // Bar Comments Routes
 
-app.get('/bars/:id/comments/new', (req, res) => {
+app.get('/bars/:id/comments/new', isLoggedIn, (req, res) => {
   Bar.findById(req.params.id, (err, bar) => {
     if(err) {
       console.log(err);
@@ -93,7 +97,7 @@ app.get('/bars/:id/comments/new', (req, res) => {
   });
 });
 
-app.post('/bars/:id/comments', (req, res) => {
+app.post('/bars/:id/comments', isLoggedIn, (req, res) => {
   Bar.findById(req.params.id, (err, bar) => {
     if(err) {
       console.log(err);
@@ -145,7 +149,7 @@ app.get('/restaurants/new', isLoggedIn, (req, res) => {
   res.render("restaurants/new_restaurant");
 });
 
-app.get('/restaurants/:id', (req, res) => {
+app.get('/restaurants/:id', isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id).populate("comments").exec((err, foundRestaurant) => {
     if(err){
       console.log(err);
@@ -158,7 +162,7 @@ app.get('/restaurants/:id', (req, res) => {
 
 // Restaurant Comments Routes
 
-app.get('/restaurants/:id/comments/new', (req, res) => {
+app.get('/restaurants/:id/comments/new', isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if(err) {
       console.log(err);
@@ -168,7 +172,7 @@ app.get('/restaurants/:id/comments/new', (req, res) => {
   });
 });
 
-app.post('/restaurants/:id/comments', (req, res) => {
+app.post('/restaurants/:id/comments', isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if(err) {
       console.log(err);
