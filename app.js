@@ -211,6 +211,15 @@ app.get('/login', (req, res) => {
   res.render('login')
 });
 
+// Log In Logic
+
+app.post('/login', passport.authenticate("local",
+  {
+    successRedirect:"/restaurants",
+    failureRedirect:"/login"
+  }), (req, res) => {
+});
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");
 });
