@@ -4,4 +4,27 @@
       <h1 class="header-display">Welcome to New Orleans baby!</h1>
     </div>
   </header>
+  <div class="flex">
+    <div id="signin">
+      <h3>Already a member? Sign In Here</h3>
+      <form id="index" action="/login" method="POST">
+        <label for="username">Username: </label>
+        <input type="text" name="username">
+        <label for="username">Password: </label>
+        <input type="password" name="password">
+        <input type="submit" value="Sign In!">
+      </form>
+    </div>
+    <br>
+    <div id="signup">
+      <h3>Not a member? Sign Up Here</h3>
+      <form id="index" action="/register" method="POST">
+        <label for="username">Username: </label>
+        <input type="text" name="username">
+        <label for="password">Password: </label>
+        <input type="password" name="password">
+        <input type="submit" value="Sign Up!">
+      </form>
+    </div>
+  </div>
 <%- include('partials/footer') %>

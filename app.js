@@ -10,6 +10,12 @@ const express       = require('express'),
       User          = require('./models/user'),
       seedDB        = require('./seeds');
 
+const barsRoutes    = require('./routes/bars'),
+      barsComments  = require('./routes/bar_comments'),
+      restRoutes    = require('./routes/restaurants'),
+      restComments  = require('./routes/rest_comments'),
+      indexRoutes   = require('./routes/index');
+
 mongoose.connect('mongodb://localhost/nola', {});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -29,221 +35,16 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
 
-// =======================
-// Home Route
-// =======================
-
-app.get('/', (req, res) => {
-  res.render("index");
-});
-
-// =======================
-// Bars
-// =======================
-
-app.get('/bars', isLoggedIn, (req, res) => {
-  Bar.find({}, (err, bars) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("bars/bars", {bars:bars, currentUser: req.user});
-    }
-  });
-});
-
-app.post('/bars', isLoggedIn, (req, res) => {
-  let name = req.body.name;
-  let image = req.body.image;
-  let description = req.body.description;
-  let newBar = {name: name, image: image, description: description};
-  Bar.create(newBar, (err, newlyCreated) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.redirect("/bars");
-    }
-  });
-});
-
-app.get('/bars/new', isLoggedIn, (req, res) => {
-  res.render("bars/new_bar");
-});
-
-app.get('/bars/:id', isLoggedIn, (req, res) => {
-  Bar.findById(req.params.id).populate("comments").exec((err, foundBar) => {
-    if(err){
-      console.log(err);
-    } else {
-      console.log(foundBar);
-      res.render("bars/show", {bar: foundBar});
-    }
-  });
-});
-
-// Bar Comments Routes
-
-app.get('/bars/:id/comments/new', isLoggedIn, (req, res) => {
-  Bar.findById(req.params.id, (err, bar) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("bars/comments/new", {bar: bar});
-    }
-  });
-});
-
-app.post('/bars/:id/comments', isLoggedIn, (req, res) => {
-  Bar.findById(req.params.id, (err, bar) => {
-    if(err) {
-      console.log(err);
-      redirect("/bars");
-    } else {
-      Comment.create(req.body.comment, (err, comment) => {
-        if(err) {
-          console.log(err);
-        } else {
-          bar.comments.push(comment._id);
-          bar.save();
-          res.redirect('/bars/' + bar._id);
-        }
-      });
-    }
-  });
-});
-
-// =======================
-// Restaurants
-// =======================
-
-
-app.get('/restaurants', isLoggedIn, (req, res) => {
-  Restaurant.find({}, (err, restaurants) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("restaurants/restaurants", {restaurants:restaurants, currentUser: req.user});
-    }
-  });
-});
-
-app.post('/restaurants', isLoggedIn, (req, res) => {
-  let name = req.body.name;
-  let image = req.body.image;
-  let description = req.body.description;
-  let newRestaurant = {name: name, image: image, description: description};
-  Restaurant.create(newRestaurant, (err, newlyCreated) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.redirect("/restaurants");
-    }
-  });
-});
-
-app.get('/restaurants/new', isLoggedIn, (req, res) => {
-  res.render("restaurants/new_restaurant");
-});
-
-app.get('/restaurants/:id', isLoggedIn, (req, res) => {
-  Restaurant.findById(req.params.id).populate("comments").exec((err, foundRestaurant) => {
-    if(err){
-      console.log(err);
-    } else {
-      console.log(foundRestaurant);
-      res.render("restaurants/show", {restaurant: foundRestaurant});
-    }
-  });
-});
-
-// Restaurant Comments Routes
-
-app.get('/restaurants/:id/comments/new', isLoggedIn, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("restaurants/comments/new", {restaurant: restaurant});
-    }
-  });
-});
-
-app.post('/restaurants/:id/comments', isLoggedIn, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
-    if(err) {
-      console.log(err);
-      redirect("/restaurants");
-    } else {
-      Comment.create(req.body.comment, (err, comment) => {
-        if(err) {
-          console.log(err);
-        } else {
-          restaurant.comments.push(comment._id);
-          restaurant.save();
-          res.redirect('/restaurants/' + restaurant._id);
-        }
-      });
-    }
-  });
-});
-
-// ========================
-// AUTH Routes
-// ========================
-
-// Register form
-app.get('/register', (req, res) => {
-  res.render('register');
-});
-
-// Sign Up Logic
-app.post('/register', (req, res) => {
-  var newUser = new User({username: req.body.username});
-  User.register(newUser, req.body.password, (err, user) => {
-    if(err){
-      console.log(err);
-      return res.render('register');
-    }
-    passport.authenticate('local')(req, res, () => {
-      res.redirect('/bars');
-    });
-  });
-});
-
-// Log In form
-
-app.get('/login', (req, res) => {
-  res.render('login')
-});
-
-// Log In Logic
-
-app.post('/login', passport.authenticate("local",
-  {
-    successRedirect:"/restaurants",
-    failureRedirect:"/login"
-  }), (req, res) => {
-});
-
-// Log Out Route
-
-app.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
-
-// Authentication Middleware
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-};
+app.use(indexRoutes);
+app.use(barsRoutes);
+app.use(barsComments);
+app.use(restRoutes);
+app.use(restComments);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");

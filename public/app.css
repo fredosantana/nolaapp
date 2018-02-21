@@ -3,6 +3,42 @@ body {
   color: white;
 }
 
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#signin {
+  background-color: red;
+  flex: 1;
+}
+
+#signin h3 {
+  color: green;
+  text-align: center;
+}
+
+#signup {
+  background-color: blue;
+  flex: 1;
+}
+
+#index {
+  display: flex;
+  jusify-content: flex-end;
+  padding: .25em;
+}
+
+#index > label {
+    padding: .5em 1em .5em 0;
+    flex: 1;
+}
+
+#index > input {
+    flex: 2;
+}
+
+
 .row {
   display: flex;
   flex-wrap: wrap;
