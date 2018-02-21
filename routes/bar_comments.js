@@ -1,9 +1,9 @@
 const express = require('express'),
-      router  = express.Router(),
+      router  = express.Router({mergeParams: true}),
       Bar     = require('../models/bars'),
       Comment = require('../models/comments');
 
-router.get('/bars/:id/comments/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   Bar.findById(req.params.id, (err, bar) => {
     if(err) {
       console.log(err);
@@ -13,7 +13,7 @@ router.get('/bars/:id/comments/new', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/bars/:id/comments', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   Bar.findById(req.params.id, (err, bar) => {
     if(err) {
       console.log(err);

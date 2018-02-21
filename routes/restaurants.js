@@ -2,7 +2,7 @@ const express = require('express'),
       router  = express.Router(),
       Restaurant = require('../models/restaurants');
 
-router.get('/restaurants', isLoggedIn, (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
   Restaurant.find({}, (err, restaurants) => {
     if(err) {
       console.log(err);
@@ -12,7 +12,7 @@ router.get('/restaurants', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/restaurants', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description = req.body.description;
@@ -26,11 +26,11 @@ router.post('/restaurants', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/restaurants/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render("restaurants/new_restaurant");
 });
 
-router.get('/restaurants/:id', isLoggedIn, (req, res) => {
+router.get('/:id', isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id).populate("comments").exec((err, foundRestaurant) => {
     if(err){
       console.log(err);

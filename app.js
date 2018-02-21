@@ -40,11 +40,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(indexRoutes);
-app.use(barsRoutes);
-app.use(barsComments);
-app.use(restRoutes);
-app.use(restComments);
+app.use('/', indexRoutes);
+app.use('/bars', barsRoutes);
+app.use('/bars/:id/comments', barsComments);
+app.use('/restaurants', restRoutes);
+app.use('/restaurants/:id/comments', restComments);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("NolaApp Launched");

@@ -2,7 +2,7 @@ const express = require('express'),
       router  = express.Router(),
       Bar     = require('../models/bars');
 
-router.get('/bars', isLoggedIn, (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
   Bar.find({}, (err, bars) => {
     if(err) {
       console.log(err);
@@ -12,7 +12,7 @@ router.get('/bars', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/bars', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description = req.body.description;
@@ -26,11 +26,11 @@ router.post('/bars', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/bars/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render("bars/new_bar");
 });
 
-router.get('/bars/:id', isLoggedIn, (req, res) => {
+router.get('/:id', isLoggedIn, (req, res) => {
   Bar.findById(req.params.id).populate("comments").exec((err, foundBar) => {
     if(err){
       console.log(err);
