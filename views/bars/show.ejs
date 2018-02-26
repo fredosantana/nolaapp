@@ -9,7 +9,7 @@
     <p><a class="btn btn-success" href="/bars/<%= bar.id %>/comments/new">Add a Comment</a></p>
   <% bar.comments.forEach((comment) => { %>
     <p>
-      <%= comment.author %> - <%= comment.text %>
+      <%= comment.author.username %> - <%= comment.text %>
     </p>
   <% }) %>
 <%- include('../partials/footer') %>

@@ -9,7 +9,7 @@
     <p><a class="btn btn-success" href="/restaurants/<%= restaurant.id %>/comments/new">Add a Comment</a></p>
   <% restaurant.comments.forEach((comment) => { %>
     <p>
-      <%= comment.author %> - <%= comment.text %>
+      <%= comment.author.username %> - <%= comment.text %>
     </p>
   <% }) %>
 <%- include('../partials/footer') %>
