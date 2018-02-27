@@ -10,7 +10,10 @@
         <br>
         <input type="text" class="form-control" name="bar[description]" value="<%= bar.description %>">
       </div>
-      <button type="submit" class="btn btn-primary">Edit this bar</button>
+      <button type="submit" class="btn btn-primary">Update</button>
+      <form id="dlte-btn" action="/bars/<%= bar._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+      </form>
     </form>
   </div>
 </header>

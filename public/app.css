@@ -76,3 +76,7 @@ footer, h4, .navbar, .btn, .form-control {
   background-color: #007F00;
   border-color: #007F00;
 }
+
+#dlte-btn {
+  display: inline;
+}

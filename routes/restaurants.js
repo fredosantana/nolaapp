@@ -71,6 +71,18 @@ router.put('/:id', isLoggedIn, (req, res) => {
   });
 });
 
+// DESTROY restaurant ROUTE
+
+router.delete('/:id', (req, res) => {
+  Restaurant.findByIdAndRemove(req.params.id, (err) => {
+    if(err) {
+      res.redirect("/restaurants");
+    } else {
+      res.redirect("/restaurants");
+    }
+  });
+});
+
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
