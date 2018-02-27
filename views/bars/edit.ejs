@@ -2,13 +2,13 @@
 <header class="jumbotron">
   <div class="container">
     <h2 class="header-display">Edit <%= bar.name %></h2>
-    <form action="/bars/<%= bar._id %>/edit?_method=PUT" method="POST">
+    <form action="/bars/<%= bar._id %>?_method=PUT" method="POST">
       <div class="form-group">
-        <input type="text" class="form-control" name="name" value="<%= bar.name %>">
+        <input type="text" class="form-control" name="bar[name]" value="<%= bar.name %>">
         <br>
-        <input type="text" class="form-control" name="image" value="<%= bar.image %>">
+        <input type="text" class="form-control" name="bar[image]" value="<%= bar.image %>">
         <br>
-        <input type="text" class="form-control" name="description" value="<%= bar.description %>">
+        <input type="text" class="form-control" name="bar[description]" value="<%= bar.description %>">
       </div>
       <button type="submit" class="btn btn-primary">Edit this bar</button>
     </form>
