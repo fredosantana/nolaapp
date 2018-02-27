@@ -6,6 +6,7 @@
   </header>
   <img src="<%= bar.image %>">
   <p><%= bar.description %></p>
+  <p><em>Submitted by: <%= bar.author.username %></em></p>
     <p><a class="btn btn-success" href="/bars/<%= bar.id %>/comments/new">Add a Comment</a></p>
   <% bar.comments.forEach((comment) => { %>
     <p>
