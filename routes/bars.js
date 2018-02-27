@@ -46,6 +46,18 @@ router.get('/:id', isLoggedIn, (req, res) => {
   });
 });
 
+// EDIT BAR ROUTE
+
+router.get('/:id/edit', isLoggedIn, (req, res) => {
+  Bar.findById(req.params.id, (err, foundBar) => {
+    if(err) {
+      res.redirect("/bars");
+    } else {
+      res.render("bars/edit", {bar: foundBar});
+    }
+  });
+});
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
     return next();

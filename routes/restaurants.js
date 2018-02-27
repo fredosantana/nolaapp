@@ -47,6 +47,19 @@ router.get('/:id', isLoggedIn, (req, res) => {
   });
 });
 
+// EDIT ROUTE
+
+router.get('/:id/edit', isLoggedIn, (req, res) => {
+  Restaurant.findById(req.params.id, (err, foundRestaurant) => {
+    if(err) {
+      res.redirect("/restaurants");
+    } else {
+      res.render("restaurants/edit", {restaurant: foundRestaurant});
+    }
+  });
+});
+
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
     return next();

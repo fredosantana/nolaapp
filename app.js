@@ -1,26 +1,28 @@
-const express       = require('express'),
-      app           = express(),
-      bodyParser    = require('body-parser'),
-      mongoose      = require('mongoose'),
-      passport      = require('passport'),
-      LocalStrategy = require('passport-local'),
-      Bar           = require('./models/bars'),
-      Restaurant    = require('./models/restaurants'),
-      Comment       = require('./models/comments'),
-      User          = require('./models/user'),
-      seedDB        = require('./seeds');
+const express         = require('express'),
+      app             = express(),
+      bodyParser      = require('body-parser'),
+      methodOverride  = require('method-override'),
+      mongoose        = require('mongoose'),
+      passport        = require('passport'),
+      LocalStrategy   = require('passport-local'),
+      Bar             = require('./models/bars'),
+      Restaurant      = require('./models/restaurants'),
+      Comment         = require('./models/comments'),
+      User            = require('./models/user'),
+      seedDB          = require('./seeds');
 
-const barsRoutes    = require('./routes/bars'),
-      barsComments  = require('./routes/bar_comments'),
-      restRoutes    = require('./routes/restaurants'),
-      restComments  = require('./routes/rest_comments'),
-      indexRoutes   = require('./routes/index');
+const barsRoutes      = require('./routes/bars'),
+      barsComments    = require('./routes/bar_comments'),
+      restRoutes      = require('./routes/restaurants'),
+      restComments    = require('./routes/rest_comments'),
+      indexRoutes     = require('./routes/index');
 
 mongoose.connect('mongodb://localhost/nola', {});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
-seedDB();
+// seedDB();
 
 // PASSPORT CONFIGURATION
 

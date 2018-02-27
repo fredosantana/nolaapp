@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+<header class="jumbotron">
+  <div class="container">
+    <h2 class="header-display">Edit <%= bar.name %></h2>
+    <form action="/bars/<%= bar._id %>/edit?_method=PUT" method="POST">
+      <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="Bar name">
+        <br>
+        <input type="text" class="form-control" name="image" placeholder="Image URL">
+        <br>
+        <input type="text" class="form-control" name="description" placeholder="Description">
+      </div>
+      <button type="submit" class="btn btn-primary">Edit this bar</button>
+    </form>
+  </div>
+</header>
+<%- include('../partials/footer') %>
