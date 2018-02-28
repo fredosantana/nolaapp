@@ -49,14 +49,19 @@ router.get('/:id', isLoggedIn, (req, res) => {
 
 // EDIT ROUTE
 
-router.get('/:id/edit', isLoggedIn, (req, res) => {
-  Restaurant.findById(req.params.id, (err, foundRestaurant) => {
-    if(err) {
-      res.redirect("/restaurants");
-    } else {
-      res.render("restaurants/edit", {restaurant: foundRestaurant});
-    }
-  });
+router.get('/:id/edit', (req, res) => {
+  if (req.isAuthenticated()) {
+    Restaurant.findById(req.params.id, (err, foundRestaurant) => {
+      if(err) {
+        res.redirect("/restaurants");
+      } else {
+        res.render("restaurants/edit", {restaurant: foundRestaurant});
+      }
+    });
+  } else {
+    console.log("You gotta be logged in for this restaurant fool");
+    res.send("You gotta be logged in for this restaurant fool!");
+  }
 });
 
 // UPDATE ROUTE

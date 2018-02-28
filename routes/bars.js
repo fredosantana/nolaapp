@@ -48,14 +48,22 @@ router.get('/:id', isLoggedIn, (req, res) => {
 
 // EDIT BAR ROUTE
 
-router.get('/:id/edit', isLoggedIn, (req, res) => {
-  Bar.findById(req.params.id, (err, foundBar) => {
-    if(err) {
-      res.redirect("/bars");
-    } else {
-      res.render("bars/edit", {bar: foundBar});
-    }
-  });
+router.get('/:id/edit', (req, res) => {
+  // check if particular user is logged in
+  if (req.isAuthenticated()) {
+    Bar.findById(req.params.id, (err, foundBar) => {
+      if(err) {
+        res.redirect("/bars");
+      } else {
+        res.render("bars/edit", {bar: foundBar});
+      }
+    });
+  } else {
+    console.log("You gotta be logged in for this bar fool");
+    res.send("You gotta be logged in for this bar fool!");
+  }
+    // if logged in, does user own the bar
+  // if not, redirect
 });
 
 // UPDATE BAR ROUTE
@@ -69,7 +77,6 @@ router.put('/:id', isLoggedIn, (req, res) => {
     }
   });
 });
-
 
 // DESTROY BAR ROUTE
 
