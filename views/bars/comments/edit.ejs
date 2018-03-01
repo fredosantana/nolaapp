@@ -1,0 +1,12 @@
+<%- include('../../partials/header') %>
+<div class="jumbotron">
+  <h2 class="form-display">Guess you have a second thought about this bar</h2>
+  <form action="/bars/<%= bar_id %>/comments/<%= comment._id %>/?_method=PUT" method="POST">
+    <div class="form-group">
+      <input type="text" class="form-control" name="comment[text]" value="<%= comment.text %>">
+      <br>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit your Comment</button>
+  </form>
+</div>
+<%- include('../../partials/footer') %>

@@ -41,9 +41,14 @@ router.post('/', isLoggedIn, (req, res) => {
 // Edit a comment
 
 router.get('/:comment_id/edit', (req, res) => {
-  res.send("Edit restaurant comment route");
+  Comment.findById(req.params.comment_id, (err, foundComment) => {
+    if(err) {
+      res.redirect("back");
+    } else {
+      res.render("restaurants/comments/edit", {restaurant_id: req.params.id, comment: foundComment});
+    }
+  });
 });
-
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {

@@ -42,7 +42,13 @@ router.post('/', isLoggedIn, (req, res) => {
 // Edit a comment
 
 router.get('/:comment_id/edit', (req, res) => {
-  res.send("Edit bar comment route");
+  Comment.findById(req.params.comment_id, (err, foundComment) => {
+    if(err) {
+      res.redirect("back");
+    } else {
+      res.render("bars/comments/edit", {bar_id: req.params.id, comment: foundComment});
+    }
+  });
 });
 
 function isLoggedIn(req, res, next){
