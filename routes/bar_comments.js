@@ -41,7 +41,7 @@ router.post('/', isLoggedIn, (req, res) => {
 
 // Edit a comment
 
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', checkBarComment, (req, res) => {
   Comment.findById(req.params.comment_id, (err, foundComment) => {
     if(err) {
       res.redirect("back");
@@ -83,5 +83,26 @@ function isLoggedIn(req, res, next){
   }
   res.redirect('/');
 };
+
+function checkBarComment(req, res, next) {
+  if (req.isAuthenticated()) {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+      if(err) {
+        res.redirect("/bars");
+      } else {
+        // if logged in, does user own the comment
+        if(foundComment.author.id.equals(req.user._id)) {
+          next();
+          // if not, redirect
+        } else {
+          res.redirect("back");
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+}
+
 
 module.exports = router;
