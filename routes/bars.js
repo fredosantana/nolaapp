@@ -48,33 +48,16 @@ router.get('/:id', isLoggedIn, (req, res) => {
 
 // EDIT BAR ROUTE
 
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', isThisYourBar, (req, res) => {
   // check if particular user is logged in
-  if (req.isAuthenticated()) {
-    Bar.findById(req.params.id, (err, foundBar) => {
-      console.log(foundBar.author.id);
-      console.log(req.user._id);
-      if(err) {
-        res.redirect("/bars");
-      } else {
-        // if logged in, does user own the bar
-        if(foundBar.author.id.equals(req.user._id)) {
-          res.render("bars/edit", {bar: foundBar});
-        // if not, redirect
-        } else {
-          res.send("Can't do that yo!");
-        }
-      }
-    });
-  } else {
-    console.log("You gotta be logged in for this bar fool");
-    res.send("You gotta be logged in for this bar fool!");
-  }
+  Bar.findById(req.params.id, (err, foundBar) => {
+    res.render("bars/edit", {bar: foundBar});
+  });
 });
 
 // UPDATE BAR ROUTE
 
-router.put('/:id', isLoggedIn, (req, res) => {
+router.put('/:id', isThisYourBar, (req, res) => {
   Bar.findByIdAndUpdate(req.params.id, req.body.bar, (err, updatedBar) => {
     if(err) {
       res.redirect("/bars");
@@ -86,7 +69,7 @@ router.put('/:id', isLoggedIn, (req, res) => {
 
 // DESTROY BAR ROUTE
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isThisYourBar, (req, res) => {
   Bar.findByIdAndRemove(req.params.id, (err) => {
     if(err) {
       res.redirect("/bars");
@@ -96,11 +79,35 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+// Middleware to ensure user log in
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
     return next();
   }
   res.redirect('/');
 };
+
+// Middleware to ensure logged in user is allowed to edit/destroy bar created
+
+function isThisYourBar(req, res, next) {
+  if (req.isAuthenticated()) {
+    Bar.findById(req.params.id, (err, foundBar) => {
+      if(err) {
+        res.redirect("/bars");
+      } else {
+        // if logged in, does user own the bar
+        if(foundBar.author.id.equals(req.user._id)) {
+          next();
+          // if not, redirect
+        } else {
+          res.redirect("back");
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+}
 
 module.exports = router;

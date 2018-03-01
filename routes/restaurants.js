@@ -49,31 +49,15 @@ router.get('/:id', isLoggedIn, (req, res) => {
 
 // EDIT ROUTE
 
-router.get('/:id/edit', (req, res) => {
-  if (req.isAuthenticated()) {
-    Restaurant.findById(req.params.id, (err, foundRestaurant) => {
-      console.log(foundRestaurant.author.id);
-      console.log(req.user._id);
-      if(err) {
-        res.redirect("/restaurants");
-      } else {
-        if(foundRestaurant.author.id.equals(req.user._id)) {
-          res.render("restaurants/edit", {restaurant: foundRestaurant});
-        // if not, redirect
-        } else {
-          res.send("Can't do that yo!");
-        }
-      }
-    });
-  } else {
-    console.log("You gotta be logged in for this restaurant fool");
-    res.send("You gotta be logged in for this restaurant fool!");
-  }
+router.get('/:id/edit', isThisYourRestaurant, (req, res) => {
+  Restaurant.findById(req.params.id, (err, foundRestaurant) => {
+    res.render("restaurants/edit", {restaurant: foundRestaurant});
+  });
 });
 
 // UPDATE ROUTE
 
-router.put('/:id', isLoggedIn, (req, res) => {
+router.put('/:id', isThisYourRestaurant, (req, res) => {
   Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, (err, updatedRestaurant) => {
     if(err) {
       res.redirect("/restaurants");
@@ -85,7 +69,7 @@ router.put('/:id', isLoggedIn, (req, res) => {
 
 // DESTROY restaurant ROUTE
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isThisYourRestaurant, (req, res) => {
   Restaurant.findByIdAndRemove(req.params.id, (err) => {
     if(err) {
       res.redirect("/restaurants");
@@ -95,6 +79,7 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+// Middleware to ensure user log in
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
@@ -102,5 +87,28 @@ function isLoggedIn(req, res, next){
   }
   res.redirect('/');
 };
+
+// Middleware to ensure logged in user is allowed to edit/destroy restaurant created
+
+function isThisYourRestaurant(req, res, next) {
+  if (req.isAuthenticated()) {
+    Restaurant.findById(req.params.id, (err, foundRestaurant) => {
+      if(err) {
+        res.redirect("/restaurants");
+      } else {
+        // if logged in, does user own the bar
+        if(foundRestaurant.author.id.equals(req.user._id)) {
+          next();
+          // if not, redirect
+        } else {
+          res.redirect("back");
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+}
+
 
 module.exports = router;
