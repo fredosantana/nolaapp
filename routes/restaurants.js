@@ -52,10 +52,17 @@ router.get('/:id', isLoggedIn, (req, res) => {
 router.get('/:id/edit', (req, res) => {
   if (req.isAuthenticated()) {
     Restaurant.findById(req.params.id, (err, foundRestaurant) => {
+      console.log(foundRestaurant.author.id);
+      console.log(req.user._id);
       if(err) {
         res.redirect("/restaurants");
       } else {
-        res.render("restaurants/edit", {restaurant: foundRestaurant});
+        if(foundRestaurant.author.id.equals(req.user._id)) {
+          res.render("restaurants/edit", {restaurant: foundRestaurant});
+        // if not, redirect
+        } else {
+          res.send("Can't do that yo!");
+        }
       }
     });
   } else {

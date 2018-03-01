@@ -52,18 +52,24 @@ router.get('/:id/edit', (req, res) => {
   // check if particular user is logged in
   if (req.isAuthenticated()) {
     Bar.findById(req.params.id, (err, foundBar) => {
+      console.log(foundBar.author.id);
+      console.log(req.user._id);
       if(err) {
         res.redirect("/bars");
       } else {
-        res.render("bars/edit", {bar: foundBar});
+        // if logged in, does user own the bar
+        if(foundBar.author.id.equals(req.user._id)) {
+          res.render("bars/edit", {bar: foundBar});
+        // if not, redirect
+        } else {
+          res.send("Can't do that yo!");
+        }
       }
     });
   } else {
     console.log("You gotta be logged in for this bar fool");
     res.send("You gotta be logged in for this bar fool!");
   }
-    // if logged in, does user own the bar
-  // if not, redirect
 });
 
 // UPDATE BAR ROUTE
