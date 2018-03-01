@@ -15,5 +15,6 @@
     <p>
       <%= comment.author.username %> - <%= comment.text %>
     </p>
+    <a class="btn btn-xs btn-warning" href="/bars/<%= bar._id %>/comments/<%= comment._id %>/edit">Edit</a>
   <% }) %>
 <%- include('../partials/footer') %>
