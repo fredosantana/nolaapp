@@ -6,7 +6,10 @@
       <input type="text" class="form-control" name="comment[text]" value="<%= comment.text %>">
       <br>
     </div>
-    <button type="submit" class="btn btn-primary">Submit your Comment</button>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  <form action="/restaurants/<%= restaurant_id %>/comments/<%= comment._id %>/?_method=DELETE" method="POST">
+    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
   </form>
 </div>
 <%- include('../../partials/footer') %>

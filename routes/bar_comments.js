@@ -63,6 +63,20 @@ router.put('/:comment_id', (req, res) => {
   });
 });
 
+// Destroy a comment
+
+router.delete('/:comment_id', (req, res) => {
+  // res.send("Bar delete route");
+  Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+    console.log(err);
+    if (err) {
+      res.redirect("back");
+    } else {
+      res.redirect(`/bars/${req.params.id}`)
+    }
+  });
+});
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
     return next();

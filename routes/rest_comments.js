@@ -62,6 +62,19 @@ router.put('/:comment_id', (req, res) => {
   });
 });
 
+// Destroy a comment
+
+router.delete('/:comment_id', (req, res) => {
+  Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+    console.log(err);
+    if (err) {
+      res.redirect("back");
+    } else {
+      res.redirect(`/restaurants/${req.params.id}`)
+    }
+  });
+});
+
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {

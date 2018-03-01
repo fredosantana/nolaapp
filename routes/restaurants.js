@@ -72,7 +72,7 @@ router.put('/:id', isThisYourRestaurant, (req, res) => {
 router.delete('/:id', isThisYourRestaurant, (req, res) => {
   Restaurant.findByIdAndRemove(req.params.id, (err) => {
     if(err) {
-      res.redirect("/restaurants");
+      res.send("The problem is here");
     } else {
       res.redirect("/restaurants");
     }

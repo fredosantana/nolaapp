@@ -11,10 +11,11 @@
         <input type="text" class="form-control" name="bar[description]" value="<%= bar.description %>">
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
-      <form id="dlte-btn" action="/bars/<%= bar._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-danger">Delete</button>
-      </form>
     </form>
+    <form id="dlte-btn" action="/bars/<%= bar._id %>?_method=DELETE" method="POST">
+      <button class="btn btn-danger">Delete</button>
+    </form>
+
   </div>
 </header>
 <%- include('../partials/footer') %>

@@ -11,9 +11,9 @@
         <input type="text" class="form-control" name="restaurant[description]" value="<%= restaurant.description %>">
       </div>
       <button type="submit" class="btn btn-success">Update</button>
-      <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-        <button id="dlte-btn" class="btn btn-danger">Delete</button>
-      </form>
+    </form>
+    <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+      <button id="dlte-btn" class="btn btn-danger">Delete</button>
     </form>
   </div>
 </header>
