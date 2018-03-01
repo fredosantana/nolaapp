@@ -2,7 +2,9 @@
   <header class="jumbotron">
     <div class="container">
       <h2 class="header-display"><%= restaurant.name %></h2>
-      <a href="<%= restaurant._id %>/edit"><button class="btn btn-success">Edit/Destroy Here</button></a>
+      <% if(currentUser && restaurant.author.id.equals(currentUser._id)) { %>
+        <a href="<%= restaurant._id %>/edit"><button class="btn btn-success">Edit/Destroy Here</button></a>
+      <% } %>
     </div>
   </header>
   <img src="<%= restaurant.image %>">

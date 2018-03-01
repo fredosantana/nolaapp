@@ -2,7 +2,9 @@
   <header class="jumbotron">
     <div class="container">
       <h2 class="header-display"><%= bar.name %></h2>
-      <a href="<%= bar._id %>/edit"><button class="btn btn-success">Edit/Destroy Here</button></a>
+      <% if(currentUser && bar.author.id.equals(currentUser._id)) { %>
+        <a href="<%= bar._id %>/edit"><button class="btn btn-success">Edit/Destroy Here</button></a>
+      <% } %>
     </div>
   </header>
   <img src="<%= bar.image %>">

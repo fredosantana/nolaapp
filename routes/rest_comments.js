@@ -38,6 +38,13 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
+// Edit a comment
+
+router.get('/:comment_id/edit', (req, res) => {
+  res.send("Edit restaurant comment route");
+});
+
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()) {
     return next();
