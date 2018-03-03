@@ -11,32 +11,19 @@
   </head>
 
   <body>
-    <div class="container">
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <!-- Brand -->
-  <a class="navbar-brand" href="/">NOLA</a>
+    <header class="header">
+		<h1 class="logo"><a href="/">NOLA</a></h1>
+      <ul class="main-nav">
+        <% if(!currentUser) { %>
+          <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+          <li><a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+        <% } else { %>
+          <li><p>Welcome <%= currentUser.username %></p></li>
+          <li class="bar"><a href="/bars"><i class="fas fa-glass-martini"></i> Bars</a></li>
+          <li class="restaurant"><a href="/restaurants"><i class="fas fa-utensils"></i> Restaurants</a></li>
+          <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <% } %>
+      </ul>
+	  </header>
 
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <% if(!currentUser) { %>
-      <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
-      <li class="nav-item">
-      <li class="nav-item">
-        <a class="nav-link" href="/register">Sign Up</a>
-      </li>
-    <% } else { %>
-      <li class="nav-link">Welcome <%= currentUser.username %></li>
-      <li>
-      <a class="nav-link" href="/logout">Logout</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/bars">Bars</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/restaurants">Restaurants</a>
-      </li>
-    <% } %>
-  </ul>
-</nav>
+    <div class="container">

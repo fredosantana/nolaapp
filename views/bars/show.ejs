@@ -14,7 +14,9 @@
   <% bar.comments.forEach((comment) => { %>
     <p>
       <%= comment.author.username %> - <%= comment.text %>
+      <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+        <a class="btn btn-xs btn-warning" href="/bars/<%= bar._id %>/comments/<%= comment._id %>/edit">Edit Comment</a>
+      <% } %>
     </p>
-    <a class="btn btn-xs btn-warning" href="/bars/<%= bar._id %>/comments/<%= comment._id %>/edit">Edit</a>
   <% }) %>
 <%- include('../partials/footer') %>

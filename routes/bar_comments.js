@@ -53,7 +53,7 @@ router.get('/:comment_id/edit', checkBarComment, (req, res) => {
 
 // Update a comment
 
-router.put('/:comment_id', (req, res) => {
+router.put('/:comment_id', checkBarComment, (req, res) => {
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
     if (err) {
       res.redirect("back");
@@ -65,7 +65,7 @@ router.put('/:comment_id', (req, res) => {
 
 // Destroy a comment
 
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id', checkBarComment, (req, res) => {
   // res.send("Bar delete route");
   Comment.findByIdAndRemove(req.params.comment_id, (err) => {
     console.log(err);
