@@ -1,9 +1,10 @@
 const express    = require('express'),
       router     = express.Router({mergeParams: true}),
       Restaurant = require('../models/restaurants'),
-      Comment    = require('../models/comments');
+      Comment    = require('../models/comments'),
+      middleware = require('../middleware');
 
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if(err) {
       console.log(err);
@@ -13,7 +14,7 @@ router.get('/new', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if(err) {
       console.log(err);
@@ -40,7 +41,7 @@ router.post('/', isLoggedIn, (req, res) => {
 
 // Edit a comment
 
-router.get('/:comment_id/edit', checkRestComment, (req, res) => {
+router.get('/:comment_id/edit', middleware.checkRestComment, (req, res) => {
   Comment.findById(req.params.comment_id, (err, foundComment) => {
     if(err) {
       res.redirect("back");
@@ -52,7 +53,7 @@ router.get('/:comment_id/edit', checkRestComment, (req, res) => {
 
 // Update a comment
 
-router.put('/:comment_id', checkRestComment, (req, res) => {
+router.put('/:comment_id', middleware.checkRestComment, (req, res) => {
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
     if (err) {
       res.redirect("back");
@@ -64,7 +65,7 @@ router.put('/:comment_id', checkRestComment, (req, res) => {
 
 // Destroy a comment
 
-router.delete('/:comment_id', checkRestComment, (req, res) => {
+router.delete('/:comment_id', middleware.checkRestComment, (req, res) => {
   Comment.findByIdAndRemove(req.params.comment_id, (err) => {
     console.log(err);
     if (err) {
@@ -74,34 +75,5 @@ router.delete('/:comment_id', checkRestComment, (req, res) => {
     }
   });
 });
-
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/');
-};
-
-function checkRestComment(req, res, next) {
-  if (req.isAuthenticated()) {
-    Comment.findById(req.params.comment_id, (err, foundComment) => {
-      if(err) {
-        res.redirect("/restaurants");
-      } else {
-        // if logged in, does user own the comment
-        if(foundComment.author.id.equals(req.user._id)) {
-          next();
-          // if not, redirect
-        } else {
-          res.redirect("back");
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
-
 
 module.exports = router;

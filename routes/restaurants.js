@@ -1,8 +1,9 @@
 const express = require('express'),
       router  = express.Router(),
-      Restaurant = require('../models/restaurants');
+      Restaurant = require('../models/restaurants'),
+      middleware = require('../middleware');
 
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', middleware.isLoggedIn, (req, res) => {
   Restaurant.find({}, (err, restaurants) => {
     if(err) {
       console.log(err);
@@ -12,7 +13,7 @@ router.get('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description = req.body.description;
@@ -32,11 +33,11 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   res.render("restaurants/new_restaurant");
 });
 
-router.get('/:id', isLoggedIn, (req, res) => {
+router.get('/:id', middleware.isLoggedIn, (req, res) => {
   Restaurant.findById(req.params.id).populate("comments").exec((err, foundRestaurant) => {
     if(err){
       console.log(err);
@@ -49,7 +50,7 @@ router.get('/:id', isLoggedIn, (req, res) => {
 
 // EDIT ROUTE
 
-router.get('/:id/edit', isThisYourRestaurant, (req, res) => {
+router.get('/:id/edit', middleware.isThisYourRestaurant, (req, res) => {
   Restaurant.findById(req.params.id, (err, foundRestaurant) => {
     res.render("restaurants/edit", {restaurant: foundRestaurant});
   });
@@ -57,7 +58,7 @@ router.get('/:id/edit', isThisYourRestaurant, (req, res) => {
 
 // UPDATE ROUTE
 
-router.put('/:id', isThisYourRestaurant, (req, res) => {
+router.put('/:id', middleware.isThisYourRestaurant, (req, res) => {
   Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, (err, updatedRestaurant) => {
     if(err) {
       res.redirect("/restaurants");
@@ -69,7 +70,7 @@ router.put('/:id', isThisYourRestaurant, (req, res) => {
 
 // DESTROY restaurant ROUTE
 
-router.delete('/:id', isThisYourRestaurant, (req, res) => {
+router.delete('/:id', middleware.isThisYourRestaurant, (req, res) => {
   Restaurant.findByIdAndRemove(req.params.id, (err) => {
     if(err) {
       res.send("The problem is here");
@@ -78,37 +79,5 @@ router.delete('/:id', isThisYourRestaurant, (req, res) => {
     }
   });
 });
-
-// Middleware to ensure user log in
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/');
-};
-
-// Middleware to ensure logged in user is allowed to edit/destroy restaurant created
-
-function isThisYourRestaurant(req, res, next) {
-  if (req.isAuthenticated()) {
-    Restaurant.findById(req.params.id, (err, foundRestaurant) => {
-      if(err) {
-        res.redirect("/restaurants");
-      } else {
-        // if logged in, does user own the bar
-        if(foundRestaurant.author.id.equals(req.user._id)) {
-          next();
-          // if not, redirect
-        } else {
-          res.redirect("back");
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
-
 
 module.exports = router;

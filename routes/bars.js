@@ -1,8 +1,9 @@
-const express = require('express'),
-      router  = express.Router(),
-      Bar     = require('../models/bars');
+const express     = require('express'),
+      router      = express.Router(),
+      Bar         = require('../models/bars'),
+      middleware  = require('../middleware');
 
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', middleware.isLoggedIn, (req, res) => {
   Bar.find({}, (err, bars) => {
     if(err) {
       console.log(err);
@@ -12,7 +13,7 @@ router.get('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   let name = req.body.name;
   let image = req.body.image;
   let description = req.body.description;
@@ -31,11 +32,11 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   res.render("bars/new_bar");
 });
 
-router.get('/:id', isLoggedIn, (req, res) => {
+router.get('/:id', middleware.isLoggedIn, (req, res) => {
   Bar.findById(req.params.id).populate("comments").exec((err, foundBar) => {
     if(err){
       console.log(err);
@@ -48,7 +49,7 @@ router.get('/:id', isLoggedIn, (req, res) => {
 
 // EDIT BAR ROUTE
 
-router.get('/:id/edit', isThisYourBar, (req, res) => {
+router.get('/:id/edit', middleware.isThisYourBar, (req, res) => {
   // check if particular user is logged in
   Bar.findById(req.params.id, (err, foundBar) => {
     res.render("bars/edit", {bar: foundBar});
@@ -57,7 +58,7 @@ router.get('/:id/edit', isThisYourBar, (req, res) => {
 
 // UPDATE BAR ROUTE
 
-router.put('/:id', isThisYourBar, (req, res) => {
+router.put('/:id', middleware.isThisYourBar, (req, res) => {
   Bar.findByIdAndUpdate(req.params.id, req.body.bar, (err, updatedBar) => {
     if(err) {
       res.redirect("/bars");
@@ -69,7 +70,7 @@ router.put('/:id', isThisYourBar, (req, res) => {
 
 // DESTROY BAR ROUTE
 
-router.delete('/:id', isThisYourBar, (req, res) => {
+router.delete('/:id', middleware.isThisYourBar, (req, res) => {
   Bar.findByIdAndRemove(req.params.id, (err) => {
     if(err) {
       res.redirect("/bars");
@@ -78,36 +79,5 @@ router.delete('/:id', isThisYourBar, (req, res) => {
     }
   });
 });
-
-// Middleware to ensure user log in
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/');
-};
-
-// Middleware to ensure logged in user is allowed to edit/destroy bar created
-
-function isThisYourBar(req, res, next) {
-  if (req.isAuthenticated()) {
-    Bar.findById(req.params.id, (err, foundBar) => {
-      if(err) {
-        res.redirect("/bars");
-      } else {
-        // if logged in, does user own the bar
-        if(foundBar.author.id.equals(req.user._id)) {
-          next();
-          // if not, redirect
-        } else {
-          res.redirect("back");
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router;

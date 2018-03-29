@@ -1,9 +1,10 @@
 const express = require('express'),
       router  = express.Router({mergeParams: true}),
       Bar     = require('../models/bars'),
-      Comment = require('../models/comments');
+      Comment = require('../models/comments'),
+      middleware = require('../middleware');
 
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   Bar.findById(req.params.id, (err, bar) => {
     if(err) {
       console.log(err);
@@ -13,7 +14,7 @@ router.get('/new', isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   Bar.findById(req.params.id, (err, bar) => {
     if(err) {
       console.log(err);
@@ -41,7 +42,7 @@ router.post('/', isLoggedIn, (req, res) => {
 
 // Edit a comment
 
-router.get('/:comment_id/edit', checkBarComment, (req, res) => {
+router.get('/:comment_id/edit', middleware.checkBarComment, (req, res) => {
   Comment.findById(req.params.comment_id, (err, foundComment) => {
     if(err) {
       res.redirect("back");
@@ -53,7 +54,7 @@ router.get('/:comment_id/edit', checkBarComment, (req, res) => {
 
 // Update a comment
 
-router.put('/:comment_id', checkBarComment, (req, res) => {
+router.put('/:comment_id', middleware.checkBarComment, (req, res) => {
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
     if (err) {
       res.redirect("back");
@@ -65,7 +66,7 @@ router.put('/:comment_id', checkBarComment, (req, res) => {
 
 // Destroy a comment
 
-router.delete('/:comment_id', checkBarComment, (req, res) => {
+router.delete('/:comment_id', middleware.checkBarComment, (req, res) => {
   // res.send("Bar delete route");
   Comment.findByIdAndRemove(req.params.comment_id, (err) => {
     console.log(err);
@@ -76,33 +77,5 @@ router.delete('/:comment_id', checkBarComment, (req, res) => {
     }
   });
 });
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/');
-};
-
-function checkBarComment(req, res, next) {
-  if (req.isAuthenticated()) {
-    Comment.findById(req.params.comment_id, (err, foundComment) => {
-      if(err) {
-        res.redirect("/bars");
-      } else {
-        // if logged in, does user own the comment
-        if(foundComment.author.id.equals(req.user._id)) {
-          next();
-          // if not, redirect
-        } else {
-          res.redirect("back");
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
-
 
 module.exports = router;
