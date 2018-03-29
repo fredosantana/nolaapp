@@ -32,7 +32,7 @@ router.post('/register', (req, res) => {
 // Log In form
 
 router.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login', {message: req.flash('error')});
 });
 
 // Log In Logic

@@ -3,6 +3,7 @@ const express         = require('express'),
       bodyParser      = require('body-parser'),
       methodOverride  = require('method-override'),
       mongoose        = require('mongoose'),
+      flash           = require('connect-flash'),
       passport        = require('passport'),
       LocalStrategy   = require('passport-local'),
       Bar             = require('./models/bars'),
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
+app.use(flash());
 // seedDB();
 
 // PASSPORT CONFIGURATION
